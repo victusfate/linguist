@@ -35,7 +35,7 @@ def reset_logger():
     )
   log.set_logger(oNewLogger)
 reset_logger()
-log.info('deployment bump start',tStart)
+log.info('deployment start',tStart)
 
 @app.route('/')
 async def index(request):
