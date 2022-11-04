@@ -6,7 +6,7 @@ COPY . /var/www/linguist
 RUN make clean
 RUN make dependencies
 RUN make application
-EXPOSE 5000
+EXPOSE 5050
 
 ENV PYTHONPATH='/var/www/linguist/:$PYTHONPATH'
 
