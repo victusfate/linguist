@@ -41,7 +41,7 @@ services:
     entrypoint: sh ./entrypoint.sh
     mem_limit: 10g
     ports:
-      - 5000:5000
+      - 5050:5050
     working_dir: /var/www/linguist
     volumes:
       - ./:/var/www/linguist

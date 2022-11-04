@@ -18,7 +18,7 @@ from rsyslog_cee.logger import Logger,LoggerOptions
 
 from linguist.transformers import Transformers
 
-PORT = 5000
+PORT = 5050
 
 tStart = time.time()
 
