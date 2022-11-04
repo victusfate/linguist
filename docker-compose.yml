@@ -1,0 +1,70 @@
+services:
+  consul:
+    image: consul
+    networks:
+        - conc
+    ports:
+        - '8500:8500'
+        - '8600:8600/tcp'
+        - '8600:8600/udp'
+    volumes:
+        - ./consul/config:/consul/config
+        - ./consul/data:/consul/data
+    command: agent -server -config-file=/consul/config/config.json -bind 0.0.0.0 -client 0.0.0.0
+  # ps2consul:
+  #   image: ${ECR_URI}infra/ps2consul:master-288b666
+  #   networks:
+  #       - conc
+  #   volumes:
+  #       - $HOME/.aws:/home/node/.aws:ro
+  #   environment:
+  #       ENVIRONMENT: local
+  #       AWS_REGION:  us-east-1
+  #       AWS_PROFILE: welco
+  #       CONSUL_HOST: consul
+  #   depends_on:
+  #       - consul
+  redis:
+      image: redis:5.0.7
+      # user: ${MY_USER_ID}:${MY_GROUP_ID}
+      networks:
+          - conc
+      ports:
+          - 6379:6379
+      volumes:
+          - ./redis/data:/data        
+  linguist:
+    image: linguist
+    networks:
+        - conc
+    container_name: linguist
+    entrypoint: sh ./entrypoint.sh
+    mem_limit: 10g
+    ports:
+      - 5000:5000
+    working_dir: /var/www/linguist
+    volumes:
+      - ./:/var/www/linguist
+    environment:
+      CONSUL_HOST: consul
+      CACHE_REDIS_HOST: redis
+    depends_on:
+      - consul
+  linguist-training:
+    image: linguist
+    networks:
+        - conc
+    container_name: linguist-training
+    entrypoint: sh ./entrypoint_training.sh
+    mem_limit: 10g
+    working_dir: /var/www/linguist
+    volumes:
+      - ./:/var/www/linguist
+    environment:
+      CONSUL_HOST: consul
+      CACHE_REDIS_HOST: redis
+    depends_on:
+      - consul
+networks:
+  conc:
+    driver: bridge

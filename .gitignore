@@ -1,0 +1,13 @@
+.DS_Store
+model
+*.pyc
+__pycache__
+*.db
+linguist.egg-info
+build/
+dist
+data/
+linguist/bin/config_welco.json
+test/*.sav
+config.test.json
+.vscode
