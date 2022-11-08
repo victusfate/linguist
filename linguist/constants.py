@@ -54,7 +54,7 @@ def setConfig(env=None):
       consul_list.append(consul_tuple[1])
     # print('consul_list',consul_list)
     CONFIG = data_tools.consul_to_nested_dict(consul_list)
-    print('CONFIG',CONFIG)
+    # print('CONFIG',CONFIG)
   except Exception as e:
     print('linguist.constants consul exception',e)
 

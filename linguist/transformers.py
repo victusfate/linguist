@@ -4,8 +4,8 @@ import spacy
 from spacy import displacy
 from spacy.language import Language
 
-nlp = spacy.load('en_core_web_sm')
-# nlp = spacy.load('en_core_web_trf')
+# nlp = spacy.load('en_core_web_sm')
+nlp = spacy.load('en_core_web_trf')
 
 @Language.component("custom_sentencizer")
 def custom_sentencizer(doc):

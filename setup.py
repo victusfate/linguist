@@ -8,8 +8,8 @@ reqs = [
   'psutil==5.6.*',
   'python-consul==1.1.*',
   'redis==3.5.*',
-  'aioredis==2.0.*',
-  'spacy==3.4.*'
+  'aioredis==2.0.*'
+  # 'spacy==3.4.*'
 ]
 
 setup(

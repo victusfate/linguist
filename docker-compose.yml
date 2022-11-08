@@ -50,21 +50,6 @@ services:
       CACHE_REDIS_HOST: redis
     depends_on:
       - consul
-  linguist-training:
-    image: linguist
-    networks:
-        - conc
-    container_name: linguist-training
-    entrypoint: sh ./entrypoint_training.sh
-    mem_limit: 10g
-    working_dir: /var/www/linguist
-    volumes:
-      - ./:/var/www/linguist
-    environment:
-      CONSUL_HOST: consul
-      CACHE_REDIS_HOST: redis
-    depends_on:
-      - consul
 networks:
   conc:
     driver: bridge
