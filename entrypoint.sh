@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 # not working yet
 pip install -v -r full_requirements.txt --no-cache
-# python3 -m spacy download en_core_web_sm
-python3 -m spacy download en_core_web_trf
+python3 -m spacy download en_core_web_sm
+# python3 -m spacy download en_core_web_trf
 # python3 -c "import spacy; p = spacy.load('en_core_web_sm')"
 
 consul_addr=$(echo http://$CONSUL_HOST:8500)
