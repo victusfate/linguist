@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
-# not working yet
-pip install -v -r full_requirements.txt --no-cache
-python3 -m spacy download en_core_web_sm
-# python3 -m spacy download en_core_web_trf
-# python3 -c "import spacy; p = spacy.load('en_core_web_sm')"
+# this works, but no major advantage over building the image with it since it deploys ok
+# pip install -v -r full_requirements.txt --no-cache
+# python3 -m spacy download en_core_web_sm
+# # python3 -m spacy download en_core_web_trf
+# # python3 -c "import spacy; p = spacy.load('en_core_web_sm')"
 
 consul_addr=$(echo http://$CONSUL_HOST:8500)
 aws_key=$(consul kv get -http-addr=$consul_addr 'aws/auth/linguist/key')
