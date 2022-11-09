@@ -18,18 +18,9 @@ def custom_sentencizer(doc):
             # the parser to leave those tokens alone
             doc[i + 1].is_sent_start = False
     return doc
-nlp.add_pipe("custom_sentencizer", before="parser")
+nlp.add_pipe("custom_sentencizer", after="tagger")
 
 class Transformers:
-  def ner_sentence(text):
-    global nlp
-    doc = nlp(text)
-    results = []
-    for ent in doc.ents:
-      results.append({'text': ent.text, 'start_char': ent.start_char, 'end_char': ent.end_char, 'label': ent.label_ })
-    log.info('Transformers.ner_sentence',{'text': text,'results': results})
-    return results
-
   def pos(text):
     global nlp
     doc = nlp(text)
@@ -63,6 +54,17 @@ class Transformers:
     log.info('Transformers.seg',{'text': text,'results': results})
     return results
 
+  # pretty fast
+  def ner_sentence(text):
+    global nlp
+    doc = nlp(text,disable=["tok2vec", "tagger", "parser", "attribute_ruler", "lemmatizer"])
+    results = []
+    for ent in doc.ents:
+      results.append({'text': ent.text, 'start_char': ent.start_char, 'end_char': ent.end_char, 'label': ent.label_ })
+    log.info('Transformers.ner_sentence',{'text': text,'results': results})
+    return results
+
+  # slower
   def ner(text):
     global nlp
     sentences = Transformers.seg(text)
@@ -71,7 +73,7 @@ class Transformers:
       sentence_arr.append(s['text'])
 
     results = []
-    for idx,doc in enumerate(nlp.pipe(sentence_arr)):
+    for idx,doc in enumerate(nlp.pipe(sentence_arr,disable=["tok2vec", "tagger", "parser", "attribute_ruler", "lemmatizer"])):
       start = sentences[idx]['start']
       log.info('Transformers.ner.sentence',{'doc': doc.text})
       for ent in doc.ents:
@@ -107,10 +109,11 @@ class Transformers:
     result['pos'] = pos_results
 
     # ner
-    # ner_results = []
-    # for ent in doc.ents:
-    #   ner_results.append({'text': ent.text, 'start_char': ent.start_char, 'end_char': ent.end_char, 'label': ent.label_ })
-    ner_results = Transformers.ner(text)
+    ner_results = []
+    for ent in doc.ents:
+      ner_results.append({'text': ent.text, 'start_char': ent.start_char, 'end_char': ent.end_char, 'label': ent.label_ })
+    # too slow
+    # ner_results = Transformers.ner(text)
     log.info('Transformers.line_processor',{'text': text,'ner_results': ner_results})
     result['ner'] = ner_results
     return result
