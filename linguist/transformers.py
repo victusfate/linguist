@@ -117,3 +117,12 @@ class Transformers:
     log.info('Transformers.line_processor',{'text': text,'ner_results': ner_results})
     result['ner'] = ner_results
     return result
+
+  def ner_pos_lines(lines):
+    results = []
+    for line in lines:
+      text = line['text']
+      line_out = line
+      line_out['results'] = Transformers.ner_pos(text)
+      results.append(line_out)
+    return results

@@ -118,5 +118,13 @@ async def ner_pos_post(request,text=None):
   log.oLogger.summary('server.ner_pos_post.Summary')
   return sanic_json(result)
 
+@app.route('/ner_pos_lines',methods=['POST'])
+async def ner_pos_post(request,text=None):
+  reset_logger()
+  lines = request.json.get('lines')
+  result = Transformers.ner_pos_lines(lines)
+  log.oLogger.summary('server.ner_pos_lines.Summary')
+  return sanic_json(result)
+
 if __name__ == '__main__':
   app.run(host='0.0.0.0',port=PORT)

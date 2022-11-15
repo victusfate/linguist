@@ -1,10 +1,6 @@
 import requests
 
 
-text = "Millie's In The Pan\nThe Hideout\nMap Room\nMonteverde"
-rget = requests.get('http://localhost:5050/ner/' + text)
-print('get',rget.json())
-
 text = '''
 20 Things to Do on Long Island in the Summer
 From the south shore to the north shore, there is no shortage of fun things to do on Long Island in the summer.
@@ -153,6 +149,11 @@ Among numerous indoor and outdoor exhibits of marine and other wildlife, the Lon
 Spend a Day in Port Jeff
 And we can’t leave out a day in Port Jefferson. With a variety of restaurants (Old Fields, The Pie, The Fifth Season), fun food stops (Toast Coffee House, The Secret Garden Tea Room, Sweet n’ Savory Creperie Crepe and Rice Pudding Bar), unique shops and popular retail stores, it’s no wonder that this waterfront village is a summer hotspot. From here, you can also take the ferry to Connecticut.
 '''
-rpost = requests.post('http://localhost:5050/ner_pos',json={'text': text})
-print('post',rpost.json())
 
+text_lines = text.split('\n')
+lines = []
+for i,line in enumerate(text_lines):
+  lines.append({'line_id': i, 'text': line})
+
+rpost = requests.post('http://localhost:5050/ner_pos_lines',json={'lines': lines})
+print('post',rpost.json())
